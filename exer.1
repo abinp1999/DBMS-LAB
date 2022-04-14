@@ -48,7 +48,7 @@ mysql> desc stdu;
 
 
 
-mysql> alter table stdu add primary key(roll_no);
+mysql> alter table stdu add primary key(roll_no);  // use only create command
 Query OK, 0 rows affected (0.99 sec)
 Records: 0  Duplicates: 0  Warnings: 0
 
@@ -289,7 +289,7 @@ mysql> desc invoice_itemm;
 
 
 
- mysql> alter table stdu add check(0<age<99);
+ mysql> alter table stdu add check(0<age<99);  //use CREATE command only
 Query OK, 0 rows affected (0.52 sec)
 Records: 0  Duplicates: 0  Warnings: 0
 
@@ -308,3 +308,10 @@ mysql> desc stdu;
 mysql> 
 
 
+// Correck the mistakes
+Q2)
+2.	Create a table STUDENT have the fields(roll_no, name, age, address, gender)and add following constraints on it.
+Roll_no – Primary key
+Name – does not allow null values
+Age- must be in between (0-99), does not allow null values
+Gender- default value is ‘m’
