@@ -1,0 +1,200 @@
+1.Insert values in person table.
+
+insert into person values(100,'ghanasyam','tmsy','1998',415726),(101,'abin','cgm','2000',415733),(102,'tom','mkm','2001',465733),(103,'midun','kglm','2001',565733),(104,'siyan','kdy','1999',565533);
+Query OK, 5 rows affected (0.47 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from person;
++------+-----------+------+------+----------+
+| ssn  | name      | city | dob  | adhar_no |
++------+-----------+------+------+----------+
+|  100 | ghanasyam | tmsy | 1998 |   415726 |
+|  101 | abin      | cgm  | 2000 |   415733 |
+|  102 | tom       | mkm  | 2001 |   465733 |
+|  103 | midun     | kglm | 2001 |   565733 |
+|  104 | siyan     | kdy  | 1999 |   565533 |
++------+-----------+------+------+----------+
+5 rows in set (0.00 sec)
+
+*******************************************************************************************************************************
+2.Insert values in STUDENT table
+
+insert into STUDENT values(10,'ghanasyam',23,'tmsy','m'),(11,'athira',21,'calicut','f'),(20,'sreehari',31,'kglm','m'),(33,'vishnu',22,'kglm','m'),(27,'sethulakshmi',22,'mkm','f');
+Query OK, 5 rows affected (0.45 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+select * from STUDENT;
++---------+--------------+------+---------+--------+
+| roll_no | name         | age  | address | gender |
++---------+--------------+------+---------+--------+
+|      10 | ghanasyam    |   23 | tmsy    | m      |
+|      11 | athira       |   21 | calicut | f      |
+|      20 | sreehari     |   31 | kglm    | m      |
+|      27 | sethulakshmi |   22 | mkm     | f      |
+|      33 | vishnu       |   22 | kglm    | m      |
++---------+--------------+------+---------+--------+
+5 rows in set (0.00 sec)
+
+*******************************************************************************************************************************
+3.Insert values in INVOICE database.
+
+use invoice; //using "invoice database"
+
+
+
+	customer table
+	**************
+mysql> alter table customer add column name varchar(25) after cust_id; //added new column 'name'
+Query OK, 0 rows affected (1.24 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> alter table customer modify ph_no bigint; //promoted 'int' to 'bigint'
+Query OK, 3 rows affected (0.98 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> insert into customer values(100,'tom','pazhoor','tvm',7510734911),(101,'abi','dream home','ekm',7460734911),(102,'arjun','new home','kkd',9860734911),(103,'sreehari','old home','knr',7460736911);
+Query OK, 4 rows affected (0.46 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> insert into customer(cust_id,name,address,city) values(105,'midun','big home','ekm');  //customer with ph_no 'NULL'
+Query OK, 1 row affected (0.06 sec)
+
+select * from customer;
++---------+----------+------------+-----------+------------+
+| cust_id | name     | address    | city      | ph_no      |
++---------+----------+------------+-----------+------------+
+|     100 | tom      | pazhoor    | tvm       | 7510734911 |
+|     101 | abi      | dream home | ekm       | 7460734911 |
+|     102 | arjun    | new home   | kkd       | 9860734911 |
+|     103 | sreehari | old home   | knr       | 7460736911 |
+|     105 | midun    | big home   | ekm       |       NULL |
+|    1001 | NULL     | lal road   | ekm       |  789456120 |
+|    1002 | NULL     | raj road   | kannur    |  889152655 |
+|    1032 | NULL     | sm road    | kozhikode |     123789 |
++---------+----------+------------+-----------+------------+
+8 rows in set (0.00 sec)
+
+ 
+
+	product table
+	**************
+
+mysql>  insert into product values(10,'blade',9);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into product values(11,'brush',15.0),(15,'soap',60.0),(19,'rice',100.0),(20,'bag',200.0);
+Query OK, 4 rows affected (0.06 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+select * from product;
++------+----------------+-------+
+| p_id | p_name         | price |
++------+----------------+-------+
+|   10 | blade          |     9 |
+|   11 | brush          |    15 |
+|   15 | soap           |    60 |
+|   19 | rice           |   100 |
+|   20 | bag            |   200 |
+|  101 | soap           |    39 |
+|  102 | pen            |    10 |
+|  103 | coconut oil    |    85 |
+|  104 | sugar          |    45 |
+|  105 | pencil         |     5 |
+|  106 | instrument box |   210 |
+|  107 | curry powder   |    52 |
+|  108 | eraser         |    12 |
++------+----------------+-------+
+13 rows in set (0.00 sec)
+
+
+
+	invoice_master
+	**************
+
+mysql> insert into invoice_master values(50,100,'2022-01-02');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into invoice_master values(51,100,'2022-01-06'),(52,101,'2022-03-29'),(53,105,'2021-01-02'),(54,105,'2022-03-02'),(55,102,'2022-04-02');
+Query OK, 5 rows affected (0.08 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+select * from invoice_master;
++--------+---------+------------+
+| inv_id | cust_id | inv_date   |
++--------+---------+------------+
+|      1 |    1001 | 2021-01-01 |
+|      2 |    1032 | 2021-01-11 |
+|      8 |    1002 | 2021-01-18 |
+|     10 |    1001 | 2021-02-08 |
+|     50 |     100 | 2022-01-02 |
+|     51 |     100 | 2022-01-06 |
+|     52 |     101 | 2022-03-29 |
+|     53 |     105 | 2021-01-02 |
+|     54 |     105 | 2022-03-02 |
+|     55 |     102 | 2022-04-02 |
++--------+---------+------------+
+10 rows in set (0.00 sec)
+
+
+
+	 invoice_item
+	**************
+
+mysql> insert into invoice_item values(50,15,2);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into invoice_item value(50,11,3);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> insert into invoice_item values(51,15,5);
+Query OK, 1 row affected (0.52 sec)
+
+mysql> insert into invoice_item values(52,10,10);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into invoice_item values(53,19,5);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into invoice_item values(53,11,5);
+Query OK, 1 row affected (0.43 sec)
+
+mysql> insert into invoice_item values(54,10,6);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into invoice_item values(54,11,2);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into invoice_item values(54,19,4);
+Query OK, 1 row affected (0.51 sec)
+
+mysql> insert into invoice_item values(55,15,1);
+Query OK, 1 row affected (0.51 sec)
+
+select * from invoice_item;
++--------+------+----------+
+| inv_id | p_id | quantity |
++--------+------+----------+
+|      1 |  102 |        3 |
+|      8 |  101 |        2 |
+|      8 |  106 |        1 |
+|      8 |  105 |        4 |
+|     10 |  108 |        5 |
+|     50 |   15 |        2 |
+|     50 |   11 |        3 |
+|     51 |   15 |        5 |
+|     52 |   10 |       10 |
+|     53 |   19 |        5 |
+|     54 |   10 |        6 |
+|     53 |   11 |        5 |
+|     54 |   11 |        2 |
+|     54 |   19 |        4 |
+|     55 |   15 |        1 |
++--------+------+----------+
+15 rows in set (0.00 sec)
+
+
+
+
+
+
+
