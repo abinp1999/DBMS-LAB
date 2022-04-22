@@ -1,4 +1,5 @@
-
+        EXP-1 DDL-CREATE
+        ------------------
 1)Create a table EMPLOYEE have the following fields (emp_id, name,city,dob,adhar_no)
 
 
@@ -40,7 +41,7 @@ desc STUDENT;
 a) Roll_no – Primary key
 
 
-alter table STUDENT modify roll_no int primary key;
+alter table STUDENT modify roll_no int primary key;//WRONG
 Query OK, 0 rows affected (0.77 sec)
 Records: 0  Duplicates: 0  Warnings: 0
 
@@ -236,4 +237,4 @@ desc invoice_item;
 
 
 
-
+//RESUBMIT
