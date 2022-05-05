@@ -22,28 +22,9 @@ desc EMPLOYEE;
 
 2)Create a table STUDENT have the fields(roll_no, name, age, address, gender)and add following constraints on it
 
-
-Create table STUDENT(roll_no int, name varchar(20), age int, address varchar(30), gender varchar(20));
-Query OK, 0 rows affected (0.37 sec)
-desc STUDENT;
-+---------+-------------+------+-----+---------+-------+
-| Field   | Type        | Null | Key | Default | Extra |
-+---------+-------------+------+-----+---------+-------+
-| roll_no | int(11)     | YES  |     | NULL    |       |
-| name    | varchar(20) | YES  |     | NULL    |       |
-| age     | int(11)     | YES  |     | NULL    |       |
-| address | varchar(30) | YES  |     | NULL    |       |
-| gender  | varchar(20) | YES  |     | NULL    |       |
-+---------+-------------+------+-----+---------+-------+
-5 rows in set (0.00 sec)
-
-
 a) Roll_no – Primary key
-
-
-alter table STUDENT modify roll_no int primary key;//WRONG
-Query OK, 0 rows affected (0.77 sec)
-Records: 0  Duplicates: 0  Warnings: 0
+Create table STUDENT(roll_no int primary key, name varchar(20), age int, address varchar(30), gender varchar(20));
+Query OK, 0 rows affected (0.37 sec)
 
 desc STUDENT;
 +---------+-------------+------+-----+---------+-------+
