@@ -1,0 +1,234 @@
+//Experiment No:5- DML COMMAND- DELETE
+
+
+
+1) Delete the record of customer id ‘10001’.
+
+mysql> delete from customer where id=103;
+Query OK, 1 row affected (0.06 sec)
+
+mysql> select * from customer;
++-----+-------+------------+-----------+------------+
+| id  | name  | address    | city      | ph_no      |
++-----+-------+------------+-----------+------------+
+| 100 | tom   | pazhoor    | tvm       | 7510734911 |
+| 101 | abi   | dream home | ekm       | 7460734911 |
+| 102 | arjun | new home   | kozhikode | 9860734911 |
+| 105 | midun | big home   | ekm       |       NULL |
++-----+-------+------------+-----------+------------+
+4 rows in set (0.00 sec)
+
+
+
+
+2) Delete all purchase details of items its quantity less than 2.
+
+mysql> delete from invoice_item where quantity<2;
+Query OK, 1 row affected (0.06 sec)
+
+mysql> select * from invoice_item;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|     50 |   15 |        2 |
+|     50 |   11 |        3 |
+|     51 |   15 |        7 |
+|     52 |   10 |       10 |
+|     53 |   19 |        5 |
+|     53 |   11 |        5 |
+|     54 |   10 |        6 |
+|     54 |   11 |        2 |
+|     54 |   19 |        4 |
++--------+------+----------+
+9 rows in set (0.00 sec)
+
+
+
+3) Delete the purchase details of product ‘pen’ in the in_id ‘101’.
+
+mysql> update product set pname='pen' where pname='brush';  //product 'brush' to 'pen'
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from product;
++-----+-------+--------+
+| pid | pname | price  |
++-----+-------+--------+
+|  10 | blade |   9.18 |
+|  11 | pen   |  15.30 |
+|  15 | soap  |  61.20 |
+|  19 | rice  | 102.00 |
+|  20 | bag   | 224.40 |
++-----+-------+--------+
+5 rows in set (0.00 sec)
+
+
+mysql> delete from invoice_item where inv_id=50 and pid=11;
+Query OK, 1 row affected (0.06 sec)
+
+mysql> select * from invoice_item;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|     50 |   15 |        2 |
+|     51 |   15 |        7 |
+|     52 |   10 |       10 |
+|     53 |   19 |        5 |
+|     53 |   11 |        5 |
+|     54 |   10 |        6 |
+|     54 |   11 |        2 |
+|     54 |   19 |        4 |
++--------+------+----------+
+8 rows in set (0.00 sec)
+
+
+
+
+4) Delete details of employees who does not have phone number.
+
+
+mysql> select * from customer;
++-----+-------+------------+-----------+------------+
+| id  | name  | address    | city      | ph_no      |
++-----+-------+------------+-----------+------------+
+| 100 | tom   | pazhoor    | tvm       | 7510734911 |
+| 101 | abi   | dream home | ekm       | 7460734911 |
+| 102 | arjun | new home   | kozhikode | 9860734911 |
+| 105 | midun | big home   | ekm       |       NULL |
++-----+-------+------------+-----------+------------+
+4 rows in set (0.00 sec)
+
+mysql> delete from customer where ph_no is NULL;
+Query OK, 1 row affected (0.06 sec)
+
+mysql> select * from customer;
++-----+-------+------------+-----------+------------+
+| id  | name  | address    | city      | ph_no      |
++-----+-------+------------+-----------+------------+
+| 100 | tom   | pazhoor    | tvm       | 7510734911 |
+| 101 | abi   | dream home | ekm       | 7460734911 |
+| 102 | arjun | new home   | kozhikode | 9860734911 |
++-----+-------+------------+-----------+------------+
+3 rows in set (0.00 sec)
+
+
+
+
+5)Delete all records from STUDENT table.
+
+
+
+mysql> delete from STUDENT;
+Query OK, 5 rows affected (0.46 sec)
+
+mysql> select * from STUDENT;
+Empty set (0.00 sec)
+
+
+ 
+      invoice_item(referencing table)
+      -------------------------------
+
+mysql> select * from invoice_item;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|     50 |   15 |        2 |
+|     51 |   15 |        7 |
+|     52 |   10 |       10 |
+|     53 |   19 |        5 |
+|     53 |   11 |        5 |
+|     54 |   10 |        6 |
+|     54 |   11 |        2 |
+|     54 |   19 |        4 |
++--------+------+----------+
+8 rows in set (0.00 sec)
+
+
+
+
+6)Delete Invoice details of a particular customer
+
+mysql> delete from invoice_item where inv_id in (50,51);
+Query OK, 2 rows affected (0.10 sec)
+
+mysql> select * from invoice_item;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|     52 |   10 |       10 |
+|     53 |   19 |        5 |
+|     53 |   11 |        5 |
+|     54 |   10 |        6 |
+|     54 |   11 |        2 |
+|     54 |   19 |        4 |
++--------+------+----------+
+6 rows in set (0.00 sec)
+
+
+    invoice_master(referenced table)
+    --------------------------------
+
+mysql> select * from invoice_master;
++--------+---------+------------+
+| inv_id | cust_id | inv_date   |
++--------+---------+------------+
+|     50 |     100 | 2022-01-02 |
+|     51 |     100 | 2022-01-06 |
+|     52 |     101 | 2022-03-29 |
+|     53 |     105 | 2021-01-02 |
+|     54 |     105 | 2022-03-02 |
+|     55 |     102 | 2022-04-02 |
++--------+---------+------------+
+6 rows in set (0.00 sec)
+
+
+mysql> delete from invoice_master where cust_id=100;
+Query OK, 2 rows affected (0.09 sec)
+
+mysql> select * from invoice_master;
++--------+---------+------------+
+| inv_id | cust_id | inv_date   |
++--------+---------+------------+
+|     52 |     101 | 2022-03-29 |
+|     53 |     105 | 2021-01-02 |
+|     54 |     105 | 2022-03-02 |
+|     55 |     102 | 2022-04-02 |
++--------+---------+------------+
+4 rows in set (0.00 sec)
+
+
+
+
+7)Delete the first two records of INVOICE_ITEM table its purchase quantity is high.
+
+
+mysql> select * from invoice_item;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|     52 |   10 |       10 |
+|     53 |   19 |        5 |
+|     53 |   11 |        5 |
+|     54 |   10 |        6 |
+|     54 |   11 |        2 |
+|     54 |   19 |        4 |
++--------+------+----------+
+6 rows in set (0.00 sec)
+
+
+mysql> delete from invoice_item order by quantity desc LIMIT 2;
+Query OK, 2 rows affected (0.04 sec)
+
+mysql> select * from invoice_item;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|     53 |   19 |        5 |
+|     53 |   11 |        5 |
+|     54 |   11 |        2 |
+|     54 |   19 |        4 |
++--------+------+----------+
+4 rows in set (0.00 sec)
+
+
