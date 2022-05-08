@@ -11,7 +11,7 @@ Exp4 : DML COMMAND- UPDATE
 
 1. Update the price of a particular product.
 
-update product set price=22.00 where pid=10;
+MYSQL>update product set price=22.00 where pid=10;
 Query OK, 1 row affected (0.09 sec)
 Rows matched: 1  Changed: 1  Warnings: 0
 
@@ -40,7 +40,7 @@ mysql> select * from customer;
 +-----+----------+------------+---------+------------+
 5 rows in set (0.00 sec)
  
-mysql> UPDATE customer set city='kozhikode' where name='tom';
+mysql> UPDATE customer set city='kozhikode' where name='tom'; // WRONG
 Query OK, 1 row affected (0.04 sec)
 Rows matched: 1  Changed: 1  Warnings: 0
 
@@ -142,7 +142,7 @@ mysql> SELECT * FROM invoice_item;
 9 rows in set (0.00 sec)
 
 
-mysql> update invoice_item set quantity=15 where inv_id=101;
+mysql> update invoice_item set quantity=15 where inv_id=101; // WRONG
 Query OK, 1 row affected (0.04 sec)
 Rows matched: 1  Changed: 1  Warnings: 0
 mysql> select * from invoice_item;
@@ -170,5 +170,5 @@ mysql> select * from invoice_item;
 
 
 
-
+//CORRECTION
 
