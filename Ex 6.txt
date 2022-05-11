@@ -377,3 +377,4 @@ mysql> select name from customer where name like 'a__%';
 +-------+
 2 rows in set (0.00 sec)
 
+// VERIFIED
