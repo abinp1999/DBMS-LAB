@@ -140,3 +140,4 @@ mysql> select concat(name," lives in ",city )as customer_info from customer;
 6 rows in set (0.00 sec)
 
 
+// VERIFIED
