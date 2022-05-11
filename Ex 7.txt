@@ -1,0 +1,142 @@
+//Experiment No:7- DML- SELECT QUERY 2 (GROUP BY, AGGREGATE FUNCTIONS)
+
+
+1. List product name, price except soap on price order.
+
+mysql> select * from product;
++-----+-------+--------+
+| pid | pname | price  |
++-----+-------+--------+
+|  10 | blade |   9.18 |
+|  11 | pen   |  15.30 |
+|  15 | soap  |  61.20 |
+|  19 | rice  | 102.00 |
+|  20 | bag   | 224.40 |
++-----+-------+--------+
+5 rows in set (0.00 sec)
+
+
+mysql> select pname,price from product where pname!='soap' order by price  ;
++-------+--------+
+| pname | price  |
++-------+--------+
+| blade |   9.18 |
+| pen   |  15.30 |
+| rice  | 102.00 |
+| bag   | 224.40 |
++-------+--------+
+4 rows in set (0.00 sec)
+
+******************************************************************************************************************************
+
+2. Find minimum, maximum and average price of products.
+
+mysql> select * from product;
++-----+-------+--------+
+| pid | pname | price  |
++-----+-------+--------+
+|  10 | blade |   9.18 |
+|  11 | pen   |  15.30 |
+|  15 | soap  |  61.20 |
+|  19 | rice  | 102.00 |
+|  20 | bag   | 224.40 |
++-----+-------+--------+
+5 rows in set (0.00 sec)
+
+
+mysql> select MAX(price),MIN(price),AVG(price) from product;
++------------+------------+------------+
+| MAX(price) | MIN(price) | AVG(price) |
++------------+------------+------------+
+|     224.40 |       9.18 |  82.416000 |
++------------+------------+------------+
+1 row in set (0.00 sec)
+
+******************************************************************************************************************************
+
+3. Find number of customers in each city.
+
+mysql> select * from customer;
++-----+-------+------------+-----------+------------+
+| id  | name  | address    | city      | ph_no      |
++-----+-------+------------+-----------+------------+
+| 100 | tom   | pazhoor    | tvm       | 7510734911 |
+| 101 | abi   | dream home | ekm       | 7460734911 |
+| 102 | arjun | new home   | kozhikode | 9860734911 |
+| 105 | midun | big home   | ekm       |       NULL |
++-----+-------+------------+-----------+------------+
+4 rows in set (0.00 sec)
+
+
+mysql> select city,count(city) from customer GROUP BY city;
++-----------+-------------+
+| city      | count(city) |
++-----------+-------------+
+| ekm       |           2 |
+| kozhikode |           1 |
+| tvm       |           1 |
++-----------+-------------+
+3 rows in set (0.00 sec)
+
+******************************************************************************************************************************
+
+4. Find number of customers in each city, only include city with more than or equal to 3 customers.
+
+mysql> insert into customer values(106,'sethu','great home','ekm',8086280405),(107,'athira','athira home','ekm',9006280409);
+Query OK, 2 rows affected (0.04 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from customer;
++-----+--------+-------------+-----------+------------+
+| id  | name   | address     | city      | ph_no      |
++-----+--------+-------------+-----------+------------+
+| 100 | tom    | pazhoor     | tvm       | 7510734911 |
+| 101 | abi    | dream home  | ekm       | 7460734911 |
+| 102 | arjun  | new home    | kozhikode | 9860734911 |
+| 105 | midun  | big home    | ekm       |       NULL |
+| 106 | sethu  | great home  | ekm       | 8086280405 |
+| 107 | athira | athira home | ekm       | 9006280409 |
++-----+--------+-------------+-----------+------------+
+6 rows in set (0.00 sec)
+
+
+
+mysql> select city,count(city) from customer GROUP BY city having count(city)>3;
++------+-------------+
+| city | count(city) |
++------+-------------+
+| ekm  |           4 |
++------+-------------+
+1 row in set (0.00 sec)
+
+******************************************************************************************************************************
+
+5. Show data as displayed ‘who, where’ Eg: ‘customer1 lives in ekm’.
+
+mysql> select * from customer;
++-----+-------+------------+-----------+------------+
+| id  | name  | address    | city      | ph_no      |
++-----+-------+------------+-----------+------------+
+| 100 | tom   | pazhoor    | tvm       | 7510734911 |
+| 101 | abi   | dream home | ekm       | 7460734911 |
+| 102 | arjun | new home   | kozhikode | 9860734911 |
+| 105 | sethu | big home   | ekm       | 9864573326 |
+| 108 | siyan | great home | ekm       |       NULL |
++-----+-------+------------+-----------+------------+
+5 rows in set (0.00 sec)
+
+
+mysql> select concat(name," lives in ",city )as customer_info from customer;
++--------------------------+
+| customer_info            |
++--------------------------+
+| tom lives in tvm         |
+| abi lives in ekm         |
+| arjun lives in kozhikode |
+| midun lives in ekm       |
+| sethu lives in ekm       |
+| athira lives in ekm      |
++--------------------------+
+6 rows in set (0.00 sec)
+
+
