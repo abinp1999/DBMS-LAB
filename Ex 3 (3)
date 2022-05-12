@@ -1,3 +1,4 @@
+ 	3)DML COMMAND-INSERT.
 1.Insert values in person table.
 
 insert into person values(100,'ghanasyam','tmsy','1998',415726),(101,'abin','cgm','2000',415733),(102,'tom','mkm','2001',465733),(103,'midun','kglm','2001',565733),(104,'siyan','kdy','1999',565533);
