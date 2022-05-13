@@ -17,8 +17,7 @@ mysql> select * from customer;
 +-----+--------+-------------+-----------+------------+
 7 rows in set (0.00 sec)
 
-mysql> select * from invoice master;
-ERROR 1146 (42S02): Table 'INVOICE.invoice' doesn't exist
+
 mysql> select * from invoice_master;
 +--------+---------+------------+
 | inv_id | cust_id | inv_date   |
