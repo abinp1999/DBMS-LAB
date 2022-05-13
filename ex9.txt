@@ -1,0 +1,93 @@
+//Experiment No:9 JOINS
+
+COMPLETE TABLES
+
+mysql> select * from product;
++-----+-------+-------------+
+| pid | pname | price       |
++-----+-------+-------------+
+|  10 | blade |  22.4400000 |
+|  11 | pen   |  15.3000000 |
+|  15 | soap  |  61.2000000 |
+|  19 | rice  | 102.0000000 |
+|  20 | bag   | 204.0000000 |
++-----+-------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from invoice_item;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|     53 |   11 |        5 |
+|     54 |   11 |        2 |
+|     54 |   19 |        4 |
++--------+------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from invoice_master;
++--------+---------+------------+
+| inv_id | cust_id | inv_date   |
++--------+---------+------------+
+|     52 |     101 | 2022-03-29 |
+|     53 |     105 | 2021-01-02 |
+|     54 |     105 | 2022-03-02 |
+|     55 |     102 | 2022-04-02 |
+|     56 |     108 | 2018-02-03 |
++--------+---------+------------+
+5 rows in set (0.00 sec)
+
+1)list the product name and quantity of invoice item.
+mysql> select product.pname,invoice_item.quantity from product inner join invoice_item on product.pid=invoice_item.pid;
++-------+----------+
+| pname | quantity |
++-------+----------+
+| pen   |        5 |
+| pen   |        2 |
+| rice  |        4 |
++-------+----------+
+3 rows in set (0.00 sec)
+2) Display invoice details of the transaction dated ’31-01-2022’.
+select invoice_master.inv_id,customer.name,invoice_master.inv_date,product.pname,invoice_item.quantity from customer inner join invoice_master on customer.id=invoice_master.cust_id inner join invoice_item on invoice_master.inv_id=invoice_item.inv_id join product on invoice_item.pid=product.pid where invoice_master.inv_date='2022-01-31';
++--------+-------+------------+-------+----------+
+| inv_id | name  | inv_date   | pname | quantity |
++--------+-------+------------+-------+----------+
+|     57 | jithu | 2022-01-31 | bag   |        6 |
++--------+-------+------------+-------+----------+
+1 row in set (0.00 sec)
+
+
+3) Display the customer name, product name, invoice date of purchased item ‘pen’.
+
+mysql> select customer.name,product.pname,invoice_master.inv_date from customer inner join invoice_master on customer.id=invoice_master.cust_id join invoice_item on invoice_master.inv_id=invoice_item.inv_id join product on invoice_item.pid=product.pid where product.pname="pen";
++-------+-------+------------+
+| name  | pname | inv_date   |
++-------+-------+------------+
+| midun | pen   | 2021-01-02 |
+| midun | pen   | 2022-03-02 |
++-------+-------+------------+
+2 rows in set (0.00 sec)
+
+
+4) Display all customer details and invoice details must include customer has not purchased items
+
+mysql> select customer.name,invoice_master.inv_date,product.pname,invoice_item.quantity from customer left join invoice_master on customer.id=invoice_master.cust_id left join invoice_item on invoice_master.inv_id=invoice_item.inv_id left join product on invoice_item.pid=product.pid;
++--------+------------+-------+----------+
+| name   | inv_date   | pname | quantity |
++--------+------------+-------+----------+
+| midun  | 2021-01-02 | pen   |        5 |
+| midun  | 2022-03-02 | pen   |        2 |
+| midun  | 2022-03-02 | rice  |        4 |
+| jithu  | 2022-01-31 | bag   |        6 |
+| abi    | 2022-03-29 | NULL  |     NULL |
+| arjun  | 2022-04-02 | NULL  |     NULL |
+| madhu  | 2018-02-03 | NULL  |     NULL |
+| tom    | NULL       | NULL  |     NULL |
+| sethu  | NULL       | NULL  |     NULL |
+| athira | NULL       | NULL  |     NULL |
++--------+------------+-------+----------+
+10 rows in set (0.00 sec)
+
+
+
+
+

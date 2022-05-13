@@ -1,0 +1,163 @@
+//Experiment No:-8 SUBQUERY
+
+
+COMPLETE TABLES
+---------------
+mysql> select * from customer;
++-----+--------+-------------+-----------+------------+
+| id  | name   | address     | city      | ph_no      |
++-----+--------+-------------+-----------+------------+
+| 100 | tom    | pazhoor     | kozhikode | 7510734911 |
+| 101 | abi    | mayavanam   | hbd       | 8157099673 |
+| 102 | arjun  | new home    | kkd       | 9860734911 |
+| 105 | midun  | big home    | ekm       |       NULL |
+| 106 | sethu  | great home  | ekm       | 8086280405 |
+| 107 | athira | athira home | ekm       | 9006280409 |
+| 108 | madhu  | swargam     | ekm       | 9544088960 |
++-----+--------+-------------+-----------+------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from invoice master;
+ERROR 1146 (42S02): Table 'INVOICE.invoice' doesn't exist
+mysql> select * from invoice_master;
++--------+---------+------------+
+| inv_id | cust_id | inv_date   |
++--------+---------+------------+
+|     52 |     101 | 2022-03-29 |
+|     53 |     105 | 2021-01-02 |
+|     54 |     105 | 2022-03-02 |
+|     55 |     102 | 2022-04-02 |
++--------+---------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from invoice_item;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|     53 |   11 |        5 |
+|     54 |   11 |        2 |
+|     54 |   19 |        4 |
++--------+------+----------+
+3 rows in set (0.00 sec)
+mysql> select * from product;
++-----+-------+-------------+
+| pid | pname | price       |
++-----+-------+-------------+
+|  10 | blade |  22.4400000 |
+|  11 | pen   |  15.3000000 |
+|  15 | soap  |  61.2000000 |
+|  19 | rice  | 102.0000000 |
+|  20 | bag   | 204.0000000 |
++-----+-------+-------------+
+5 rows in set (0.00 sec)
+
+1) List the customer names of invoice date 3rd February 2018.
+
+mysql> select * from customer;
++-----+--------+-------------+-----------+------------+
+| id  | name   | address     | city      | ph_no      |
++-----+--------+-------------+-----------+------------+
+| 100 | tom    | pazhoor     | kozhikode | 7510734911 |
+| 101 | abi    | mayavanam   | hbd       | 8157099673 |
+| 102 | arjun  | new home    | kkd       | 9860734911 |
+| 105 | midun  | big home    | ekm       |       NULL |
+| 106 | sethu  | great home  | ekm       | 8086280405 |
+| 107 | athira | athira home | ekm       | 9006280409 |
+| 108 | madhu  | swargam     | ekm       | 9544088960 |
++-----+--------+-------------+-----------+------------+
+7 rows in set (0.00 sec)
+//Adding new customer details in 'invoice_master' tables with the given date as the date doesn't exist before
+ insert into invoice_master (inv_id,cust_id,inv_date) values (56,108,'2018-02-03');
+ Query OK, 1 row affected (0.07 sec)
+mysql> select* from invoice_master;
++--------+---------+------------+
+| inv_id | cust_id | inv_date   |
++--------+---------+------------+
+|     52 |     101 | 2022-03-29 |
+|     53 |     105 | 2021-01-02 |
+|     54 |     105 | 2022-03-02 |
+|     55 |     102 | 2022-04-02 |
+|     56 |     108 | 2018-02-03 |
++--------+---------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select name from customer where id in (select cust_id from invoice_master where inv_date='2018-02-03');
++-------+
+| name  |
++-------+
+| madhu |
++-------+
+1 row in set (0.00 sec)
+
+
+2)  List the product name and price of each invoice item.
+
+mysql> select pname,price from product where pid in (select pid from invoice_item );
++-------+--------+
+| pname | price  |
++-------+--------+
+| pen   |  15.30 |
+| rice  | 102.00 |
++-------+--------+
+2 rows in set (0.21 sec)
+
+3) List the product names, only include their purchased quantity more than 3.
+
+
+mysql> select pname from product where pid in (select pid from invoice_item where quantity>=3);
++-------+
+| pname |
++-------+
+| pen   |
+| rice  |
++-------+
+2 rows in set (0.00 sec)
+
+
+4) Find the product that has no sale
+
+mysql> select pname from product where pid not in (select pid from invoice_item);
++-------+
+| pname |
++-------+
+| blade |
+| soap  |
+| bag   |
++-------+
+3 rows in set (0.00 sec)
+
+5) List the customer names who purchased the items ‘pen’ and ‘pencil’
+
+mysql> select name from customer where id in (select cust_id from invoice_master where inv_id in (select inv_id from invoice_item where pid in (select pid from product where pname in ("pen","pencil"))));
++-------+
+| name  |
++-------+
+| midun |
++-------+
+1 row in set (0.00 sec)
+
+6) Display the purchased product details of the customer ’xyz’.
+select pname,price from product where pid in (select pid from invoice_item where inv_id in (select inv_id from invoice_master where cust_id in (select id from customer where name="midun")));
+
++-------+-------------+
+| pname | price       |
++-------+-------------+
+| pen   |  15.3000000 |
+| rice  | 102.0000000 |
++-------+-------------+
+2 rows in set (0.00 sec)
+
+7) List the names of all customers who have purchased at least 2 products, make sure that no duplicate names in the result.
+mysql> select name from customer where id in (select cust_id from invoice_master where inv_id in (select inv_id from invoice_item  group by inv_id having count(inv_id)>=2));
++-------+
+| name  |
++-------+
+| midun |
++-------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
