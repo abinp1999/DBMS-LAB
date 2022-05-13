@@ -89,5 +89,5 @@ mysql> select customer.name,invoice_master.inv_date,product.pname,invoice_item.q
 
 
 
-
+//VERIFIED
 
