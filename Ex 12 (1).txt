@@ -1,0 +1,82 @@
+//Experiment No: 12 -DCL COMMANDS
+
+
+Create two users userone,usertwo
+
+mysql> create user userone@'localhost' identified by '1111';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> create user usertwo@'localhost' identified by '2222';
+Query OK, 0 rows affected (0.00 sec)
+
+*******************************************************************************************************************************
+
+1) GRANT
+   Give insert and select privilege to user 1 on customer table in the invoice database.
+   Give update and delete privilege to user 2 on all tables in the invoice database.
+
+
+ BEFORE GIVING GRANTS
+ --------------------
+mysql> show grants for userone@'localhost';
++-------------------------------------+
+| Grants for userone@%                |
++-------------------------------------+
+| GRANT USAGE ON *.* TO 'userone'@'%' |
++-------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> show grants for usertwo@'localhost';
++-------------------------------------+
+| Grants for usertwo@%                |
++-------------------------------------+
+| GRANT USAGE ON *.* TO 'usertwo'@'%' |
++-------------------------------------+
+1 row in set (0.00 sec)
+
+
+  GIVING GRANTS
+  -------------
+mysql> grant insert,select on customer to userone@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show grants for userone@'localhost';
++---------------------------------------------------------------+
+| Grants for userone@%                                          |
++---------------------------------------------------------------+
+| GRANT USAGE ON *.* TO 'userone'@'%'                           |
+| GRANT SELECT, INSERT ON `invoice`.`customer` TO 'userone'@'%' |
++---------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+
+mysql> grant update,delete on * to usertwo@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show grants for usertwo@'localhost';
++--------------------------------------------------------------+
+| Grants for usertwo@localhost                                 |
++--------------------------------------------------------------+
+| GRANT USAGE ON *.* TO 'usertwo'@'localhost'                  |
+| GRANT UPDATE, DELETE ON `invoice`.* TO 'usertwo'@'localhost' |
++--------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+*******************************************************************************************************************************
+
+2) REVOKE Remove delete privilege of user 2.
+
+mysql> revoke delete on * from usertwo@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show grants for usertwo@'localhost';
++------------------------------------------------------+
+| Grants for usertwo@localhost                         |
++------------------------------------------------------+
+| GRANT USAGE ON *.* TO 'usertwo'@'localhost'          |
+| GRANT UPDATE ON `INVOICE`.* TO 'usertwo'@'localhost' |
++------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+
+

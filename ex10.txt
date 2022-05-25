@@ -1,0 +1,88 @@
+//Experiment No:10  VIEWS
+
+COMPLETE TABLES
+---------------
+mysql> SELECT * from customer;
++-----+--------+-------------+-----------+------------+
+| id  | name   | address     | city      | ph_no      |
++-----+--------+-------------+-----------+------------+
+| 100 | tom    | pazhoor     | kozhikode | 7510734911 |
+| 101 | abi    | mayavanam   | hbd       | 8157099673 |
+| 102 | arjun  | new home    | kkd       | 9860734911 |
+| 105 | midun  | big home    | ekm       |       NULL |
+| 106 | sethu  | great home  | ekm       | 8086280405 |
+| 107 | athira | athira home | ekm       | 9006280409 |
+| 108 | madhu  | swargam     | ekm       | 9544088960 |
+| 109 | jithu  | j home      | ekm       |       NULL |
++-----+--------+-------------+-----------+------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from invoice_master;
++--------+---------+------------+
+| inv_id | cust_id | inv_date   |
++--------+---------+------------+
+|     52 |     101 | 2022-03-29 |
+|     53 |     105 | 2021-01-02 |
+|     54 |     105 | 2022-03-02 |
+|     55 |     102 | 2022-04-02 |
+|     56 |     108 | 2018-02-03 |
+|     57 |     109 | 2022-01-31 |
++--------+---------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from product;
++-----+-------+-------------+
+| pid | pname | price       |
++-----+-------+-------------+
+|  10 | blade |  22.4400000 |
+|  11 | pen   |  15.3000000 |
+|  15 | soap  |  61.2000000 |
+|  19 | rice  | 102.0000000 |
+|  20 | bag   | 204.0000000 |
++-----+-------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from invoice_item;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|     53 |   11 |        5 |
+|     54 |   11 |        2 |
+|     54 |   19 |        4 |
+|     57 |   20 |        6 |
++--------+------+----------+
+4 rows in set (0.00 sec)
+*********************************************************************************************************8
+1) Create a view for customers who have purchased products.
+
+mysql> create view custom1 as select customer.* from customer inner join invoice_master where customer.id=invoice_master.cust_id;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> select * from custom1;
++-----+-------+-----------+------+------------+
+| id  | name  | address   | city | ph_no      |
++-----+-------+-----------+------+------------+
+| 101 | abi   | mayavanam | hbd  | 8157099673 |
+| 102 | arjun | new home  | kkd  | 9860734911 |
+| 105 | midun | big home  | ekm  |       NULL |
+| 105 | midun | big home  | ekm  |       NULL |
+| 108 | madhu | swargam   | ekm  | 9544088960 |
+| 109 | jithu | j home    | ekm  |       NULL |
++-----+-------+-----------+------+------------+
+6 rows in set (0.01 sec)
+***************************************************************************************************************************************
+2) Create a view for invoice products[cname, inv_id, product_id, quantity]
+mysql> create view invoice3 as select customer.name,invoice_master.inv_id,product.pname,invoice_item.quantity from customer inner join invoice_master on customer.id=invoice_master.cust_id inner join invoice_item on invoice_master.inv_id=invoice_item.inv_id inner join product on invoice_item.pid=product.pid;
+Query OK, 0 rows affected (0.70 sec)
+
+mysql> select * from invoice3;
++-------+--------+-------+----------+
+| name  | inv_id | pname | quantity |
++-------+--------+-------+----------+
+| midun |     53 | pen   |        5 |
+| midun |     54 | pen   |        2 |
+| midun |     54 | rice  |        4 |
+| jithu |     57 | bag   |        6 |
++-------+--------+-------+----------+
+4 rows in set (0.02 sec)
+
