@@ -86,3 +86,4 @@ mysql> select * from invoice3;
 +-------+--------+-------+----------+
 4 rows in set (0.02 sec)
 
+// VERIFIED
