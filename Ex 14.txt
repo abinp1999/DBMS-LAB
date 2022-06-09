@@ -1,0 +1,122 @@
+//PL/SQL PROGRAMS- STORED PROCEDURES
+
+1)Create a procedure to display all tables in the invoice database.
+
+mysql> delimiter $
+mysql> create procedure p1()
+    -> begin
+    ->  select * from customer;
+    ->  select *  from invoice_item;
+    ->  select * from invoice_master;
+    ->   select * from product;
+    ->  end$
+Query OK, 0 rows affected (0.42 sec)
+
+mysql> call p1()$
++-----+--------+-------------+-----------+------------+
+| id  | name   | address     | city      | ph_no      |
++-----+--------+-------------+-----------+------------+
+| 100 | tom    | pazhoor     | tvm       | 7510734911 |
+| 101 | abi    | dream home  | ekm       | 7460734911 |
+| 102 | arjun  | new home    | kozhikode | 9860734911 |
+| 105 | midun  | big home    | ekm       |       NULL |
+| 106 | sethu  | great home  | ekm       | 8086280405 |
+| 107 | athira | athira home | ekm       | 9006280409 |
+| 108 | jithu  | j home      | ekm       |       NULL |
+| 110 | vishnu | smallhome   | kkd       | 7510444911 |
++-----+--------+-------------+-----------+------------+
+8 rows in set (0.00 sec)
+
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|     53 |   19 |        5 |
+|     53 |   11 |        5 |
+|     54 |   11 |        2 |
+|     54 |   19 |        4 |
+|     58 |   11 |        3 |
++--------+------+----------+
+5 rows in set (0.00 sec)
+
++--------+---------+------------+
+| inv_id | cust_id | inv_date   |
++--------+---------+------------+
+|     52 |     101 | 2022-03-29 |
+|     53 |     105 | 2021-01-02 |
+|     54 |     105 | 2022-03-02 |
+|     55 |     102 | 2022-04-02 |
+|     56 |     108 | 2018-02-03 |
+|     58 |     105 | 2022-01-31 |
++--------+---------+------------+
+6 rows in set (0.00 sec)
+
++-----+-------+--------+
+| pid | pname | price  |
++-----+-------+--------+
+|  10 | blade |   9.18 |
+|  11 | pen   |  15.30 |
+|  15 | soap  |  61.20 |
+|  19 | rice  | 102.00 |
+|  20 | bag   | 224.40 |
++-----+-------+--------+
+5 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+******************************************************************************************************************************
+
+2)Create a procedure to find greatest of 3 numbers.
+
+mysql>  create procedure big(a int,b int,c int)
+    ->  begin
+    ->  declare x,y,z int;
+    ->  set x=a;
+    ->  set y=b;
+    ->  set z=c;
+    ->  if x>y and x>z then
+    ->    select x as 'greather';
+    ->  elseif y>x and y>z then
+    ->    select y as 'greather';
+    ->  else
+    ->    select z as 'greather';
+    ->  end if;
+    ->  end$
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call big(2,3,4)$
++----------+
+| greather |
++----------+
+|        4 |
++----------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
+******************************************************************************************************************************
+
+3)Create a procedure to display invoice details of a particular customer
+
+
+mysql> create procedure invo1(a char(10))
+    ->  begin
+    ->    select * from invoice_master where cust_id in (select id from customer where name=a);
+    ->    end$
+Query OK, 0 rows affected (0.01 sec)
+
+
+mysql> call invo1('midun')$
++--------+---------+------------+
+| inv_id | cust_id | inv_date   |
++--------+---------+------------+
+|     53 |     105 | 2021-01-02 |
+|     54 |     105 | 2022-03-02 |
+|     58 |     105 | 2022-01-31 |
++--------+---------+------------+
+3 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
+
