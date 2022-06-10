@@ -34,3 +34,4 @@ mysql> select pname,price,Price_range1(price) from product order by price$
 5 rows in set (0.00 sec)
 
 
+//VERIFIED
