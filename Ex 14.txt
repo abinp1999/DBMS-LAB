@@ -119,4 +119,4 @@ mysql> call invo1('midun')$
 Query OK, 0 rows affected (0.00 sec)
 
 
-
+//VERIFIED
