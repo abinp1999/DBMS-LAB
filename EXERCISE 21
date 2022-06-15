@@ -1,0 +1,80 @@
+
+
+---------------------------------------------------------EXPERIMENT-21-----------------------------------------------------------------------
+NoSQL – ADMINISTRATION
+
+
+1.      Write
+a MongoDB query to create a user “CUSTOMER1” and grant the read role in the
+INVOICE database.
+
+
+2.      Write
+a MongoDB query to create the backup for the INVOICE database.
+
+
+3.      Write
+a MongoDB query to restore a particular database or a collection.
+
+
+
+
+
+
+
+
+
+
+
+
+-
+-------------------------------------------------------------QUESTION 1--------------------------------------------------------------------
+db.createUser({user:"scissna",pwd:"1234",roles:[{role:"read",db:"invoice"}]})
+Successfully added user: {
+	"user" : "scissna",
+	"roles" : [
+		{
+			"role" : "read",
+			"db" : "invoice"
+		}
+	]
+}
+> 
+
+----------------------------------------------------QUESTION 2-----------------------------------------------------------------------------
+
+mkdir /home/ksb/Desktop/mongobackup
+ksb@ksb-OptiPlex-3060:~$ sudo mongodump --db invoice --out /home/ksb/Desktop/mongobackup
+2022-06-14T15:44:25.023+0530	writing invoice.product to /home/ksb/Desktop/mongobackup/invoice/product.bson
+2022-06-14T15:44:25.083+0530	done dumping invoice.product (10 documents)
+2022-06-14T15:44:25.098+0530	writing invoice.customer to /home/ksb/Desktop/mongobackup/invoice/customer.bson
+2022-06-14T15:44:25.100+0530	done dumping invoice.customer (7 documents)
+-------------------------------------------------------QUESTION 3----------------------------------------------------------------------------
+ db.dropDatabase()
+{ "dropped" : "invoice", "ok" : 1 }
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+> ^C
+bye
+ksb@ksb-OptiPlex-3060:~$ sudo mongorestore /home/ksb/Desktop/mongobackup
+
+
+> show dbs
+admin    0.000GB
+config   0.000GB
+invoice  0.000GB
+local    0.000GB
+> 
+
+
+
+
+
+
+
+
+
+
+

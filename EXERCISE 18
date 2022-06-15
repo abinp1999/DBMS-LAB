@@ -1,0 +1,150 @@
+18  NoSQL – CRUD
+
+
+1.      Write
+a MongoDB query to create an INVOICE database and collections (CUSTOMER,
+PRODUCT) and its corresponding documents.
+
+
+2.      Write
+a MongoDB query to find all documents from the collection CUSTOMER
+
+
+3.      Write
+a MongoDB query to update the city in the collection CUSTOMER.
+
+
+4.      Write
+a MongoDB query to delete the first matched document whose city is “Calicut”.
+
+
+--------------------------------------------------------question 1------------------------------------------------------------
+
+
+> use invoice
+switched to db invoice
+> db.customer.insert({name:"jithu",city:"valad",phno:"7559935764",age:"21"});
+WriteResult({ "nInserted" : 1 })
+> db.customer.insert({name:"midhun",city:"koduvally",phno:"75599357654",age:"21"});
+WriteResult({ "nInserted" : 1 })
+> db.customer.insert({name:"athira",city:"kunnamagalam",phno:"755456657654",age:"21"})
+WriteResult({ "nInserted" : 1 })
+> db.customer.insert({name:"luna",city:"kallai",phno:"755456654",age:"21"});
+WriteResult({ "nInserted" : 1 })
+> 
+db.product.insert({pname:"bat",price:"5000"});
+WriteResult({ "nInserted" : 1 })
+> db.product.insert({pname:"ball",price:"1000"});
+WriteResult({ "nInserted" : 1 })
+> db.product.insert({pname:"stump",price:"300"});
+WriteResult({ "nInserted" : 1 })
+> db.product.insert({pname:"glou",price:"500"});
+WriteResult({ "nInserted" : 1 })
+> db.product.insert({pname:"ap",price:"250"});
+WriteResult({ "nInserted" : 1 })
+> 
+
+
+
+
+> --------------------------------------------------------question 2------------------------------------------------------------
+
+> db.customer.find().pretty()
+{
+	"_id" : ObjectId("62a81f2831e38d4e1cc1abb7"),
+	"name" : "jithu",
+	"city" : "valad",
+	"phno" : "7559935764",
+	"age" : "21"
+}
+{
+	"_id" : ObjectId("62a81f4d31e38d4e1cc1abb8"),
+	"name" : "midhun",
+	"city" : "koduvally",
+	"phno" : "75599357654",
+	"age" : "21"
+}
+{
+	"_id" : ObjectId("62a81f6c31e38d4e1cc1abb9"),
+	"name" : "athira",
+	"city" : "kunnamagalam",
+	"phno" : "755456657654",
+	"age" : "21"
+}
+{
+	"_id" : ObjectId("62a81fa931e38d4e1cc1abba"),
+	"name" : "luna",
+	"city" : "kallai",
+	"phno" : "755456654",
+	"age" : "21"
+}
+{
+	"_id" : ObjectId("62a8223b3e701fb14409de91"),
+	"name" : "jithu",
+	"city" : "valad",
+	"phno" : "7559935764",
+	"age" : "21"
+}
+{
+	"_id" : ObjectId("62a822453e701fb14409de92"),
+	"name" : "midhun",
+	"city" : "koduvally",
+	"phno" : "75599357654",
+	"age" : "21"
+}
+{
+	"_id" : ObjectId("62a8224e3e701fb14409de93"),
+	"name" : "athira",
+	"city" : "kunnamagalam",
+	"phno" : "755456657654",
+	"age" : "21"
+}
+{
+	"_id" : ObjectId("62a8225d3e701fb14409de94"),
+	"name" : "luna",
+	"city" : "kallai",
+	"phno" : "755456654",
+	"age" : "21"
+}
+> 
+> 
+> --------------------------------------------------------------------------------------------------------------------------------------------
+> 
+> 
+> 
+> --------------------------------------------------------question 3------------------------------------------------------------------------
+
+> db.customer.update({city:"kunnamangalam"},{$set:{city:"hjk"}})
+WriteResult({ "nMatched" : 0, "nUpserted" : 0, "nModified" : 0 })
+> db.customer.findOne({city:"hjk"})
+null
+> db.customer.update({city:"valad"},{$set:{city:"hjk"}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.customer.findOne({city:"hjk"})
+{
+	"_id" : ObjectId("62a81f2831e38d4e1cc1abb7"),
+	"name" : "jithu",
+	"city" : "hjk",
+	"phno" : "7559935764"
+
+--------------------------------------------------------question 4-----------------------------------------------------------
+
+ db.customer.deleteOne({city:"koduvally"})
+{ "acknowledged" : true, "deletedCount" : 1 }
+> db.customer.find()
+{ "_id" : ObjectId("62a81f2831e38d4e1cc1abb7"), "name" : "jithu", "city" : "hjk", "phno" : "7559935764", "age" : "21" }
+{ "_id" : ObjectId("62a81f6c31e38d4e1cc1abb9"), "name" : "athira", "city" : "kunnamagalam", "phno" : "755456657654", "age" : "21" }
+{ "_id" : ObjectId("62a81fa931e38d4e1cc1abba"), "name" : "luna", "city" : "kallai", "phno" : "755456654", "age" : "21" }
+
+
+
+
+
+
+
+
+
+
+
+
+
