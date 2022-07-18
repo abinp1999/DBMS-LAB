@@ -1,0 +1,141 @@
+//Experiment No: 11 - Optimising database (Using Set, arithmetic, logical and special operators)
+
+1) Display customer_id ,city who lives in either clt or tvm
+
+mysql> select id,city from customer where city="ekm" union select id,city from customer where city="kozhikode";
+
++-----+-----------+
+
+| id  | city      |
+
++-----+-----------+
+
+| 101 | ekm       |
+
+| 105 | ekm       |
+
+| 106 | ekm       |
+
+| 107 | ekm       |
+
+| 108 | ekm       |
+
+| 102 | kozhikode |
+
++-----+-----------+
+
+6 rows in set (0.00 sec)
+
+*******************************************************************************************************************************
+
+2) Display product details with an updated price amount(new price= old price+5rs)
+
+mysql> select * from product;
+
++-----+-------+--------+
+
+| pid | pname | price  |
+
++-----+-------+--------+
+
+|  10 | blade |   9.18 |
+
+|  11 | pen   |  15.30 |
+
+|  15 | soap  |  61.20 |
+
+|  19 | rice  | 102.00 |
+
+|  20 | bag   | 224.40 |
+
++-----+-------+--------+
+
+5 rows in set (0.00 sec)
+
+mysql> select pname,price+5 as new_price from product;
+
++-------+-----------+
+
+| pname | new_price |
+
++-------+-----------+
+
+| blade |     14.18 |
+
+| pen   |     20.30 |
+
+| soap  |     66.20 |
+
+| rice  |    107.00 |
+
+| bag   |    229.40 |
+
++-------+-----------+
+
+5 rows in set (0.00 sec)
+
+*******************************************************************************************************************************
+
+3) Display customer details who doesn’t have phone number and lives in ‘Ernakulam’ city (use logical operators)
+
+mysql> select * from customer;
+
++-----+--------+-------------+-----------+------------+
+
+| id  | name   | address     | city      | ph_no      |
+
++-----+--------+-------------+-----------+------------+
+
+| 100 | tom    | pazhoor     | tvm       | 7510734911 |
+
+| 101 | abi    | dream home  | ekm       | 7460734911 |
+
+| 102 | arjun  | new home    | kozhikode | 9860734911 |
+
+| 105 | midun  | big home    | ekm       |       NULL |
+
+| 106 | sethu  | great home  | ekm       | 8086280405 |
+
+| 107 | athira | athira home | ekm       | 9006280409 |
+
+| 108 | jithu  | j home      | ekm       |       NULL |
+
++-----+--------+-------------+-----------+------------+
+
+7 rows in set (0.00 sec)
+
+mysql> select name from customer where ph_no is NULL and city='ekm';
+
++-------+
+
+| name  |
+
++-------+
+
+| midun |
+
+| jithu |
+
++-------+
+
+2 rows in set (0.00 sec)
+
+*******************************************************************************************************************************
+
+4) List the product names if it finds any records in the invoice items table has quantity =4 (use special operators)
+
+mysql> select pname from product where pid in (select pid from invoice_item where quantity=4);
+
++-------+
+
+| pname |
+
++-------+
+
+| rice  |
+
++-------+
+
+1 row in set (0.00 sec)
+
+//VERIFIED
